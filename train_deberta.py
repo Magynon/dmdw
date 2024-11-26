@@ -4,8 +4,8 @@ from sklearn.model_selection import train_test_split
 from datasets import Dataset
 import pandas as pd
 
-# Load your dataset
-file_path = 'disneyland_reviews.csv'  # Replace with your actual file path
+# Load dataset
+file_path = 'disneyland_reviews.csv'
 df = pd.read_csv(file_path, encoding="cp1252")
 
 # Create Sentiment column based on Rating (>=3 is POSITIVE, <3 is NEGATIVE)
@@ -14,7 +14,6 @@ df['Sentiment'] = df['Rating'].apply(lambda x: 1 if x >= 3 else 0)  # 1 = POSITI
 # Split the dataset into training and testing (80% train, 20% test)
 train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
 
-# Preprocess the dataset (tokenization)
 tokenizer = DebertaV2Tokenizer.from_pretrained('microsoft/deberta-v3-base')
 
 def preprocess_function(examples):

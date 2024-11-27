@@ -1,9 +1,8 @@
-from transformers import DebertaV2Tokenizer, DebertaV2ForSequenceClassification
+from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 from transformers import Trainer, TrainingArguments
 from sklearn.model_selection import train_test_split
 from datasets import Dataset
 import pandas as pd
-
 
 def main():
     # Load the dataset
@@ -17,7 +16,7 @@ def main():
     train_df, test_df = train_test_split(df, test_size=0.8, random_state=42)
 
     # Preprocess the dataset (tokenization)
-    tokenizer = DebertaV2Tokenizer.from_pretrained('microsoft/deberta-v3-base')
+    tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
 
     def preprocess_function(examples):
         return tokenizer(examples['Review_Text'], padding="max_length", truncation=True, max_length=512)
@@ -38,12 +37,12 @@ def main():
     train_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask', 'labels'])
     test_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask', 'labels'])
 
-    # Load the DeBERTa model for PyTorch
-    model = DebertaV2ForSequenceClassification.from_pretrained('microsoft/deberta-v3-xsmall', num_labels=2)
+    # Load the DistilBERT model for PyTorch
+    model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=2)
 
     # Training arguments
     training_args = TrainingArguments(
-        output_dir='./deberta-results',  # Output directory
+        output_dir='./distilbert-results',  # Output directory
         evaluation_strategy="steps",  # Evaluate periodically based on steps, faster feedback
         eval_steps=500,  # Evaluate every 500 steps (adjust as needed)
         save_strategy="steps",  # Save checkpoints periodically
@@ -71,8 +70,8 @@ def main():
     trainer.train()
 
     # Save the fine-tuned model
-    model.save_pretrained('./deberta_finetuned_model')
-    tokenizer.save_pretrained('./deberta_finetuned_model')
+    model.save_pretrained('./distilbert_finetuned_model')
+    tokenizer.save_pretrained('./distilbert_finetuned_model')
 
 
 if __name__ == "__main__":

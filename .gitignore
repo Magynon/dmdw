@@ -3,3 +3,7 @@ results
 .venv
 *.csv
 .idea
+deberta-results
+deberta_finetuned_model
+distilbert-results
+distilbert_finetuned_model

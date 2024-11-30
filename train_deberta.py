@@ -7,7 +7,7 @@ import pandas as pd
 
 def main():
     # Load the dataset
-    file_path = 'disneyland_reviews.csv'
+    file_path = 'filtered_disneyland_reviews.csv'
     df = pd.read_csv(file_path, encoding="cp1252")
 
     # Create Sentiment column based on Rating (>=3 is POSITIVE, <3 is NEGATIVE)

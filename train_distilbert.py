@@ -6,14 +6,14 @@ import pandas as pd
 
 def main():
     # Load the dataset
-    file_path = 'disneyland_reviews.csv'
+    file_path = 'filtered_disneyland_reviews.csv'
     df = pd.read_csv(file_path, encoding="cp1252")
 
     # Create Sentiment column based on Rating (>=3 is POSITIVE, <3 is NEGATIVE)
     df['Sentiment'] = df['Rating'].apply(lambda x: 1 if x >= 3 else 0)  # 1 = POSITIVE, 0 = NEGATIVE
 
     # Split the dataset into training and testing (80% train, 20% test)
-    train_df, test_df = train_test_split(df, test_size=0.8, random_state=42)
+    train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
 
     # Preprocess the dataset (tokenization)
     tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
